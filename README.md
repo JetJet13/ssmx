@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="ssmx-logo.png">
+    <img src="https://user-images.githubusercontent.com/8130149/50049737-de4c4180-00b9-11e9-977a-f8432d207365.png">
 </p>
 
 # ssmx
