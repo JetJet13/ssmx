@@ -148,19 +148,19 @@ We now need to pass this `dev.env` file to `ssmx` to fetch and decrypt the value
 $ ssmx exec --env-file ./env/dev.env -- npm start
 ```
 
-#### Alternative Example
+#### Example with --name parameter
 
 Let's simplify our example from above and let's assume we store all our plain and secret env. variables in AWS SSM and we don't use `.env` files.
 
 We also prefix our keys in AWS SSM with `<env>-my-app`, i.e.
 
 ```
-+-------------------------------------+------------------------------+
-| Name                                | Value                        |
-+=====================================+==============================+
-| dev-my-app.third-party-hostname     | https://api.third-party.com  |
-| dev-my-app.third-party-access-token | shhhh-my-access-token        |
-+-------------------------------------+------------------------------+
++--------------------------------------+------------------------------+
+| Name                                 | Value                        |
++======================================+==============================+
+| /dev-my-app/third-party-hostname     | https://api.third-party.com  |
+| /dev-my-app/third-party-access-token | shhhh-my-access-token        |
++--------------------------------------+------------------------------+
 ```
 
 We can then acheive the same result in the previous example with the following command
@@ -169,32 +169,9 @@ We can then acheive the same result in the previous example with the following c
 $ ssmx exec --name dev-my-app -- npm start
 ```
 
-Now this feature is really handy because if you're using docker to containerize your applications and AWS ECS to host your containers, you can simply provide an environment variable in your container definition to differentiate between each environment and then use that environment variable as the prefix to all your keys relevant to your app in AWS SSM.
+Now this feature is really handy because if you're using docker to containerize your applications and AWS ECS to host your containers, you can simply provide an environment variable in your container definition, (i.e. `APP_NAME` ) to differentiate between each environment.
 
-To elaborate, let's revisit our example.
-
-We were using the following command to inject the env. variables into our node.js application.
-
-```bash
-$ ssmx exec --name dev-my-app -- npm start
-```
-
-Let's assume there exists parameters in AWS SSM with the following value in their keys: `dev-my-app`. For example,
-
-```
-/dev-my-app/third-party-hostname
-/dev-my-app/third-party-access-token
-```
-
-Now, let's also assume we containerized our node.js application with docker and use AWS ECS to host our container.
-
-We can then define an environment variable in our container definition:
-
-```
-APP_NAME=dev-my-app
-```
-
-and then in our Dockerfile we can do the following:
+For example, in our Dockerfile we can do the following 
 
 ```docker
 ENTRYPOINT [ "./run-app.sh" ]
@@ -206,10 +183,12 @@ ENTRYPOINT [ "./run-app.sh" ]
 #!/usr/bin/env bash
 set -e
 echo "Starting up..."
+
+# $APP_NAME is exposed by the container definition 
 ssmx exec --name $APP_NAME -- npm start
 ```
 
-#### Caveats
+#### Important Note
 
 If you plan to use the `--name` parameter with `ssmx exec`, you need to follow a specific format for the keys you create in AWS SSM. The keys need to follow the `path` format which works as follows:
 
