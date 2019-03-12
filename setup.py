@@ -12,7 +12,7 @@ setup(
     description="CLI tool for injecting parameters stored in AWS SSM into executables.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version='v1.0.2',
+    version='v1.0.3',
     py_modules=['ssmx'],
     download_url="https://github.com/JetJet13/ssmx/archive/v1.0.2.tar.gz",
     include_package_data=True,

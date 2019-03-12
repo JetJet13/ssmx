@@ -240,7 +240,7 @@ def execute(command, env_file, name, profile, region):
             key = env_var['name']
             value = env_var['value']
             if value.startswith('ssm:'):
-                secretKey = value[6:]
+                secretKey = value[4:]
                 out = get_param(secretKey, profile, region)
                 env_var['value'] = out['Value']
 
