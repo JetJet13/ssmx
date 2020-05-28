@@ -213,3 +213,13 @@ This project is a fork from HelloFresh's [ssm-cli](https://github.com/hellofresh
 - [Chamber](https://github.com/segmentio/chamber)
 - [kms-env](https://github.com/ukayani/kms-env)
 - [dotenv](https://github.com/theskumar/python-dotenv)
+
+---
+
+### Used By
+<p align="center">
+<a href="https://timerepo.co" target="_blank">
+    <img width="200" src="https://timerepo-public.s3.amazonaws.com/assets/dark-indigo-timerepo-logo-v3-%401x.png">
+</a>
+</p>
+
